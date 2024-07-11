@@ -43,11 +43,11 @@ const createText = async (req, res) => {
   try {
     const newData = await Text.create({
       ...req.body,
-      totalWords: countWords(req.body.value),
-      totalCharacters: countCharacters(req.body.value),
-      totalSentences: countSentences(req.body.value),
-      totalParagraphs: countParagraphs(req.body.value),
-      longestWords: longestWordsInParagraphs(req.body.value),
+      total_words: countWords(req.body.value),
+      total_characters: countCharacters(req.body.value),
+      total_sentences: countSentences(req.body.value),
+      total_paragraphs: countParagraphs(req.body.value),
+      longest_words: longestWordsInParagraphs(req.body.value),
     });
     res
       .status(200)
@@ -74,20 +74,22 @@ const deleteText = async (req, res) => {
 
 const updateText = async (req, res) => {
   try {
-    const text = await Text.findByIdAndUpdate(req.params.textId, {
+    const updatedText = {
       ...req.body,
-      totalWords: countWords(req.body.value),
-      totalCharacters: countCharacters(req.body.value),
-      totalSentences: countSentences(req.body.value),
-      totalParagraphs: countParagraphs(req.body.value),
-      longestWords: longestWordsInParagraphs(req.body.value),
-    });
+      total_words: countWords(req.body.value),
+      total_characters: countCharacters(req.body.value),
+      total_sentences: countSentences(req.body.value),
+      total_paragraphs: countParagraphs(req.body.value),
+      longest_words: longestWordsInParagraphs(req.body.value),
+    };
+    const text = await Text.findByIdAndUpdate(req.params.textId, updatedText);
+    text.save();
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
     }
     res
       .status(200)
-      .json({ success: true, message: "Text updated", data: text });
+      .json({ success: true, message: "Text updated", data: updatedText });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });
   }
@@ -115,13 +117,13 @@ const getParagraphsInfoByAction = async (req, res) => {
         break;
       default:
         return res
-          .status(200)
+          .status(404)
           .json({ success: true, message: "No acton type found" });
     }
     res.status(200).json({
       success: true,
       message: "Text updated",
-      [req.params.actonType.toLowerCase()]: result,
+      [req.params.actonType.toLowerCase().replace("-", "_")]: result,
     });
   } catch (error) {
     res.status(400).json({ success: false, message: error.message });

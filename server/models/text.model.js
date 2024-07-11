@@ -5,19 +5,19 @@ const TextSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter value"],
   },
-  totalWords: {
+  total_words: {
     type: Number,
   },
-  totalCharacters: {
+  total_characters: {
     type: Number,
   },
-  totalSentences: {
+  total_sentences: {
     type: Number,
   },
-  totalParagraphs: {
+  total_paragraphs: {
     type: Number,
   },
-  longestWords: {
+  longest_words: {
     type: [],
   },
 });
