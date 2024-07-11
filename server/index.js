@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const http = require("http");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const server = http.Server(app);
@@ -21,10 +22,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
+// Define the rate limit rule
+const apiLimiter = rateLimit({
+  windowMs: config.THROTTLING_WINDOW_MS,
+  max: config.THROTTLING_LIMIT_EACH_IP,
+  message: "Too many requests from this IP, please try again after 10 minutes.",
+});
+
 // Mount routes
-app.use("/api/user", usersRoutes);
+app.use("/api/user", apiLimiter, usersRoutes);
 app.use("/auth", authRoutes);
-app.use("/api/text", textRoutes);
+app.use("/api/text", apiLimiter, textRoutes);
 
 // connect to the database
 mongoose
