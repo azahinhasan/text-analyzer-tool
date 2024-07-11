@@ -14,6 +14,7 @@ const config = require("./config/config");
 // Import Routes
 const usersRoutes = require("./routes/user.routes");
 const authRoutes = require("./routes/auth.routes");
+const textRoutes = require("./routes/text.routes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,6 +24,7 @@ app.use(cors());
 // Mount routes
 app.use("/api/user", usersRoutes);
 app.use("/auth", authRoutes);
+app.use("/api/text", textRoutes);
 
 // connect to the database
 mongoose
