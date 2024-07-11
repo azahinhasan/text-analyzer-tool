@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --legacy-watch index.js",
-    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json"
+    "docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
+    "test": "jest --forceExit"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +26,10 @@
     "mongoose": "^8.5.0",
     "nodemon": "^3.1.4"
   },
-  "engine":{
+  "engine": {},
+  "devDependencies": {
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }
