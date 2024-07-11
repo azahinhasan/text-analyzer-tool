@@ -8,7 +8,8 @@
     "start": "node index.js",
     "dev": "nodemon --legacy-watch index.js",
     "docs": "./node_modules/.bin/jsdoc -c jsdoc.json",
-    "test": "jest --forceExit"
+    "test": "jest --forceExit",
+    "coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",

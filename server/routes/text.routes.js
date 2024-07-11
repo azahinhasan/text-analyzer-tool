@@ -6,6 +6,10 @@ const router = express.Router();
 router.route("/").get(textCtrl.getTextList).post(textCtrl.createText);
 
 router
+  .route("/paragraph-info/:actonType")
+  .get(textCtrl.getParagraphsInfoByAction);
+
+router
   .route("/:textId")
   .get(textCtrl.getTextByID)
   .put(textCtrl.updateText)
