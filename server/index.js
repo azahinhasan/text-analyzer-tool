@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const http = require("http");
 const rateLimit = require("express-rate-limit");
+const session = require("express-session");
 
 const app = express();
 const server = http.Server(app);
@@ -13,7 +14,6 @@ const server = http.Server(app);
 const config = require("./config/config");
 
 // Import Routes
-const usersRoutes = require("./routes/user.routes");
 const authRoutes = require("./routes/auth.routes");
 const textRoutes = require("./routes/text.routes");
 
@@ -21,6 +21,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
+app.use(
+  session({ secret: config.JWT_SECRET, resave: false, saveUninitialized: true })
+);
 
 // Define the rate limit rule
 const apiLimiter = rateLimit({
@@ -30,7 +33,6 @@ const apiLimiter = rateLimit({
 });
 
 // Mount routes
-app.use("/api/user", apiLimiter, usersRoutes);
 app.use("/auth", authRoutes);
 app.use("/api/text", apiLimiter, textRoutes);
 

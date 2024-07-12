@@ -4,7 +4,6 @@ const crypto = require("crypto");
 const UserSchema = new mongoose.Schema({
   full_name: {
     type: String,
-    required: [true, "Please enter name "],
   },
   email: {
     type: String,
@@ -19,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   },
   salt: {
     type: String, //will help us to encrypt password
-  }
+  },
 });
 
 UserSchema.virtual("password")

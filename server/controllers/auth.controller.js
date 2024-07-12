@@ -5,7 +5,24 @@ const config = require("../config/config");
 
 const signIn = async (req, res) => {
   try {
-    res.status(400).json({ success: false, message: "Could not sign in" });
+    let user = await User.findOne({ email: req.body.email });
+    console.log(user.authenticate(req.body.password));
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (!user.authenticate(req.body.password)) {
+      return res
+        .status(401)
+        .send({ error: "Email and password don't match. " });
+    }
+    const token = jwt.sign({ _id: user._id }, config.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    req.session.token = token;
+    return res.json({
+      success: true,
+      message: "Successfully loggedIn!",
+      token,
+    });
   } catch (err) {
     console.log(err);
     return res
@@ -15,8 +32,20 @@ const signIn = async (req, res) => {
 };
 
 const signOut = (req, res) => {
-  res.clearCookie("token");
+  req.session.token = "";
   return res.status(200).json({ success: true, message: "signed out" });
 };
 
-module.exports = { signIn, signOut };
+const signUp = async (req, res) => {
+  try {
+    const newData = await User.create(req.body);
+    res
+      .status(200)
+      .json({ success: true, message: "Created Successfully", data: newData });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: "Something Want Wrong!" });
+  }
+};
+
+module.exports = { signIn, signOut, signUp };

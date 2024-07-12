@@ -20,6 +20,10 @@ const TextSchema = new mongoose.Schema({
   longest_words: {
     type: [],
   },
+  created_by: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Users",
+  },
 });
 
 module.exports = mongoose.model("texts", TextSchema);
