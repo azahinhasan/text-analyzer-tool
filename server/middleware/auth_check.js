@@ -4,13 +4,14 @@ const config = require("../config/config");
 
 const verifyToken = async (req, res, next) => {
   try {
-    if (!req.session.token) {
+    const token = req.session.token || req.headers.authorization;
+    if (!token) {
       return res.status(403).json({
         success: false,
         message: "No token found.Please Log in.",
       });
     }
-    const decoded = jwt.verify(req.session.token, config.JWT_SECRET);
+    const decoded = jwt.verify(token, config.JWT_SECRET);
     req.session.user_id = decoded._id;
     next();
   } catch (err) {
