@@ -6,9 +6,10 @@ const cors = require("cors");
 const http = require("http");
 const rateLimit = require("express-rate-limit");
 const session = require("express-session");
-
 const app = express();
 const server = http.Server(app);
+const morgan = require("morgan");
+const winston = require("./config/winston");
 
 // Config
 const config = require("./config/config");
@@ -19,6 +20,7 @@ const textRoutes = require("./routes/text.routes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("combined", { stream: winston.stream }));
 app.use(cookieParser());
 app.use(cors());
 app.use(

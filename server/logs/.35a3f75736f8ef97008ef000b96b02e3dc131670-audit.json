@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 7
+    },
+    "auditLog": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\.35a3f75736f8ef97008ef000b96b02e3dc131670-audit.json",
+    "files": [
+        {
+            "date": 1720765956176,
+            "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\appscript-2024-07-12-12.log",
+            "hash": "732d36c7358d6dccfb911be4f805e19aabc47b9045d8ba057515b69c1dcaead1"
+        }
+    ],
+    "hashType": "sha256"
+}
