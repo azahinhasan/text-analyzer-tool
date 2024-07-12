@@ -11,8 +11,7 @@ const {
 
 const getTextList = async (req, res) => {
   try {
-    const list = await Text.find();
-
+    const list = await Text.find({}, { value: 1 });
     res
       .status(200)
       .json({ success: true, message: "Data Found Successfully", data: list });
@@ -25,14 +24,21 @@ const getTextList = async (req, res) => {
 const getTextByID = async (req, res) => {
   try {
     const text = await Text.findById(req.params.textId);
-
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
     }
-
-    res
-      .status(200)
-      .json({ success: true, message: "Data Found Successfully", data: text });
+    if (text.created_by?.toString() === req.session.user_id) {
+      return res.status(200).json({
+        success: true,
+        message: "Data Found Successfully",
+        data: text,
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Data Found Successfully",
+      data: { value: text.value, _id: text.id },
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Something Want Wrong!" });
@@ -48,6 +54,7 @@ const createText = async (req, res) => {
       total_sentences: countSentences(req.body.value),
       total_paragraphs: countParagraphs(req.body.value),
       longest_words: longestWordsInParagraphs(req.body.value),
+      created_by: req.session.user_id,
     });
     res
       .status(200)
@@ -130,6 +137,20 @@ const getParagraphsInfoByAction = async (req, res) => {
   }
 };
 
+const getTextListByUserId = async (req, res) => {
+  try {
+    const list = await Text.find({
+      created_by: req.session.user_id,
+    });
+    res
+      .status(200)
+      .json({ success: true, message: "Data Found Successfully", data: list });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: "Something Want Wrong!" });
+  }
+};
+
 module.exports = {
   getTextList,
   createText,
@@ -137,4 +158,5 @@ module.exports = {
   deleteText,
   updateText,
   getParagraphsInfoByAction,
+  getTextListByUserId,
 };

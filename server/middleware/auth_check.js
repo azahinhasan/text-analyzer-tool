@@ -11,7 +11,6 @@ const verifyToken = async (req, res, next) => {
       });
     }
     const decoded = jwt.verify(req.session.token, config.JWT_SECRET);
-    console.log(decoded);
     req.session.user_id = decoded._id;
     next();
   } catch (err) {

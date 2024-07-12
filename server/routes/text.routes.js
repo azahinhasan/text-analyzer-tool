@@ -8,6 +8,8 @@ router
   .get(textCtrl.getTextList)
   .post(authCheck.verifyToken, textCtrl.createText);
 
+router.route("/my").get(authCheck.verifyToken, textCtrl.getTextListByUserId);
+
 router
   .route("/paragraph-info/:actonType")
   .get(authCheck.verifyToken, textCtrl.getParagraphsInfoByAction);
