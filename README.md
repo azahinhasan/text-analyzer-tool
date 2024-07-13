@@ -1,4 +1,4 @@
-# Technology Used
+# Main Technology Used
 
 - Node js
 - Express js
@@ -70,15 +70,16 @@
 
 ## Impotent Note:
 - To access text apis user need to get authorization verification first. For that user have to hit /auth/sign-in api with valid info. 
-- After success full as response user will get a token. If user using any API development tool like Postman. Then they donn't have to do any other things they can hit text apis like api/text-GET. It will return data. Because after successful login  `token` storing into the session of app.
+- After successful, as response user will get a token. If user using any API development tool like Postman. Then they donn't have to do any other things, they can hit text apis like api/text-GET. It will return data. Because after successful login `token` storing into the session of app.
 - For other tools or way user may be have to send `token` with `Authorization header`.Otherwise they will not able to access text apis.
+  `Example- Authorization: <token>`
 
 
 # Some other info about the app
-- This app caching data into `Redis` server.Caching active for text create,delete,update and get by id APIs.
-- Throttling for text APIs is active. Set to 20 call from single IP in 10 mins. Changeable form `server/config/config.js` file.
+- This app caching data into `Redis` server. Caching active for text create,delete,update and get by id APIs. Caching config changeable from `.env`
+- Throttling for text APIs is active. Set to 20 call from single IP in 10 mins. Changeable from `server/config/config.js` file.
 - User can see his analysis report by calling GET-`/api/text/my` api.
-- Basic authorization system added. By using of this system giving user permission.
-- To run  `test` cases `npm run test` make sure port `5003` is not occupied by other process.changeable form `.env` file.
+- Basic authorization system added. By using of this system handling user permissions.
+- To run  `test` cases `npm run test` make sure port `5003` is not occupied by other process.Changeable form `.env` file.
 - Same goes to `npm run dev`. 
 - Using morgan and winston for logs tracking.
