@@ -1,5 +1,5 @@
 const redis = require("redis");
-const config = require("../config/config");
+const config = require("./config");
 
 const redis_cache = redis.createClient({
   socket: {
