@@ -80,6 +80,15 @@ const createText = async (req, res) => {
 
 const deleteText = async (req, res) => {
   try {
+    const verifyCreator = await Text.findOne({
+      _id: req.params.textId,
+      created_by: req.session.user_id,
+    });
+    if (!verifyCreator) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Not Authorized for this text" });
+    }
     const text = await Text.findByIdAndDelete(req.params.textId);
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
@@ -95,6 +104,16 @@ const deleteText = async (req, res) => {
 
 const updateText = async (req, res) => {
   try {
+    const verifyCreator = await Text.findOne({
+      _id: req.params.textId,
+      created_by: req.session.user_id,
+    });
+    if (!verifyCreator) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Not Authorized for this text" });
+    }
+
     const updatedText = {
       ...req.body,
       total_words: countWords(req.body.value),

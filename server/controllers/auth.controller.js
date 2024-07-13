@@ -44,7 +44,7 @@ const signUp = async (req, res) => {
       .json({ success: true, message: "Created Successfully", data: newData });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ success: false, message: "Something Want Wrong!" });
+    res.status(400).json({ success: false, message: error });
   }
 };
 

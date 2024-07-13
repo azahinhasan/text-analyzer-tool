@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(textCtrl.getTextList)
+  .get(authCheck.verifyToken, textCtrl.getTextList)
   .post(authCheck.verifyToken, textCtrl.createText);
 
 router.route("/my").get(authCheck.verifyToken, textCtrl.getTextListByUserId);
