@@ -6,7 +6,7 @@ const verifyToken = async (req, res, next) => {
   try {
     const token = req.session.token || req.headers.authorization;
     if (!token) {
-      return res.status(403).json({
+      return res.status(401).json({
         success: false,
         message: "No token found.Please Log in.",
       });

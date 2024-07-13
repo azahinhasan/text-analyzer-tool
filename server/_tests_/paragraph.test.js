@@ -4,6 +4,7 @@ const request = require("supertest");
 const text =
   "The quick brown fox jumps over the lazy dog. The lazy dog slept in the sun.";
 let token;
+let token2;
 
 const actions = [
   {
@@ -39,6 +40,12 @@ beforeAll(async () => {
     .send({ email: "test@test.com", password: "123456" });
   expect(res.status).toBe(200);
   token = res.body.token;
+
+  const res2 = await request(app)
+    .post(`/auth/sign-in`)
+    .send({ email: "test2@test.com", password: "123456" });
+  expect(res2.status).toBe(200);
+  token2 = res2.body.token;
 });
 
 describe("Text/paragraph Analysis Endpoints", () => {
@@ -55,8 +62,6 @@ describe("Text/paragraph Analysis Endpoints", () => {
       expect(res.body[route.replace("-", "_")]).toEqual(value);
     });
   });
-
-  afterAll(async () => {});
 });
 
 /********CRUD*******/
@@ -78,7 +83,7 @@ describe("Text CRUD Operations", () => {
     newTextId = res.body.data._id;
   });
 
-  it("should retrieve a specific text document by ID which is created by this user", async () => {
+  it("should retrieve a specific text document by ID which is created by this user (own text have total words,chars etc info)", async () => {
     const res = await request(app)
       .get(`/api/text/${newTextId}`)
       .set("Content-Type", "application/json")
@@ -88,6 +93,18 @@ describe("Text CRUD Operations", () => {
     expect(res.body.success).toBe(true);
     expect(res.body.data._id).toBe(newTextId);
     expect(res.body.data).toHaveProperty("total_characters"); //if not create by this user their not will be total_characters
+  });
+
+  it("should retrieve a specific text document by ID which is created by other user (other text donn't have total words,chars etc info)", async () => {
+    const res = await request(app)
+      .get(`/api/text/${newTextId}`)
+      .set("Content-Type", "application/json")
+      .set("Authorization", token2);
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.data._id).not.toBe(newTextId);
+    expect(res.body.data).not.toHaveProperty("total_characters"); //if not create by this user their not will be total_characters
   });
 
   it("should update a specific text document", async () => {
@@ -101,6 +118,16 @@ describe("Text CRUD Operations", () => {
     expect(res.body.success).toBe(true);
     expect(res.body.data.total_characters).toBe(36);
     expect(res.body.data.total_words).toBe(9);
+  });
+
+  it("should not update a text document without authorization", async () => {
+    const res = await request(app)
+      .put(`/api/text/${newTextId}`)
+      .send({ value: updatedText })
+      .set("Content-Type", "application/json");
+
+    expect(res.status).toBe(401);
+    expect(res.body.success).toBe(false);
   });
 
   it("should delete a specific text document", async () => {
@@ -122,6 +149,4 @@ describe("Text CRUD Operations", () => {
     expect(res.status).toBe(404);
     expect(res.body.message).toBe("No data found");
   });
-
-  afterAll(async () => {});
 });
