@@ -86,7 +86,7 @@ const deleteText = async (req, res) => {
     });
     if (!verifyCreator) {
       return res
-        .status(400)
+        .status(401)
         .json({ success: false, message: "Not Authorized for this text" });
     }
     const text = await Text.findByIdAndDelete(req.params.textId);
@@ -110,7 +110,7 @@ const updateText = async (req, res) => {
     });
     if (!verifyCreator) {
       return res
-        .status(400)
+        .status(401)
         .json({ success: false, message: "Not Authorized for this text" });
     }
 

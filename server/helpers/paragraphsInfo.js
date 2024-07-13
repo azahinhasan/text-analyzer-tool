@@ -1,7 +1,6 @@
 const countWords = (text) => {
   if (!text) return 0;
   const words = text.match(/\b\w+\b/g);
-  console.log(words, "words");
   return words.length;
 };
 

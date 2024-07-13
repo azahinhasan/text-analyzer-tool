@@ -6,7 +6,6 @@ const config = require("../config/config");
 const signIn = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
-    console.log(user.authenticate(req.body.password));
     if (!user) return res.status(404).json({ error: "User not found" });
 
     if (!user.authenticate(req.body.password)) {
