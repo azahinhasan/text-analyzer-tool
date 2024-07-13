@@ -6,11 +6,6 @@
     "auditLog": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\.35a3f75736f8ef97008ef000b96b02e3dc131670-audit.json",
     "files": [
         {
-            "date": 1720772154347,
-            "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\appscript-2024-07-12-14.log",
-            "hash": "c348ca3d90bf8076059328261780d3edc36952825ffa12616045fbac16e917af"
-        },
-        {
             "date": 1720775239103,
             "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\appscript-2024-07-12-15.log",
             "hash": "e63d5f6c4c00371e738e9798f9f6ac92eec63c6f26c197025c14476cca28fc6b"
@@ -39,6 +34,11 @@
             "date": 1720890007060,
             "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\appscript-2024-07-13-23.log",
             "hash": "96faf6f9ab7eec9e05459090b3666b1feeafb820ace8046ee7807e8e6c945aea"
+        },
+        {
+            "date": 1720893799220,
+            "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\wsl-task\\server\\logs\\appscript-2024-07-14-00.log",
+            "hash": "e5bff8f06b660e373a17286b16ffd526d1a79587eccd5c2284b57380569fc55d"
         }
     ],
     "hashType": "sha256"

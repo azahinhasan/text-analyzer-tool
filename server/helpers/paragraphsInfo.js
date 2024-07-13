@@ -1,37 +1,38 @@
-function countWords(text) {
+const countWords = (text) => {
   if (!text) return 0;
-  const words = text.split(/\s+/).filter((word) => word !== "");
+  const words = text.match(/\b\w+\b/g);
+  console.log(words, "words");
   return words.length;
-}
+};
 
-function countCharacters(text) {
+const countCharacters = (text) => {
   if (!text) return 0;
-  const characters = text.replace(/\s/g, "");
-  return characters.length;
-}
+  return text.length;
+};
 
-function countSentences(text) {
+const countSentences = (text) => {
   if (!text) return 0;
   const sentences = text
     .split(/[.!?]/)
     .filter((sentence) => sentence.trim() !== "");
   return sentences.length;
-}
+};
 
-function countParagraphs(text) {
+const countParagraphs = (text) => {
   if (!text) return 0;
   const paragraphs = text
-    .split(/\n\s*\n/)
+    .trim()
+    .split("\n")
     .filter((paragraph) => paragraph.trim() !== "");
   return paragraphs.length;
-}
+};
 
-function longestWordsInParagraphs(text) {
+const longestWordsInParagraphs = (text) => {
   if (!text) return [];
   const words = text.split(" ");
   const maxLength = Math.max(...words.map((word) => word.length));
   return words.filter((word) => word.length === maxLength);
-}
+};
 
 module.exports = {
   countWords,
