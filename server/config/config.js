@@ -1,6 +1,11 @@
 require("dotenv").config();
 
 const config = {
+  REDIS_HOST:
+    process.env.REDIS_HOST ||
+    "redis-19391.c305.ap-south-1-1.ec2.redns.redis-cloud.com",
+  REDIS_PASS: process.env.REDIS_PASS || "WcajjdyWsLce4Mmi4YzwA8YNbsonhjzh",
+  REDIS_PORT: process.env.REDIS_PORT || 19391,
   THROTTLING_WINDOW_MS: 60000 * 10, //10 MIN
   THROTTLING_LIMIT_EACH_IP: 20,
   ENV: process.env.ENV || "development",

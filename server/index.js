@@ -10,6 +10,7 @@ const app = express();
 const server = http.Server(app);
 const morgan = require("morgan");
 const winston = require("./config/winston");
+const redis = require("redis");
 
 // Config
 const config = require("./config/config");

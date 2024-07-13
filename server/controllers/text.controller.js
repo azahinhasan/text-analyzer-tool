@@ -1,6 +1,7 @@
 const Text = require("../models/text.model");
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
+const redis_cache = require("../helpers/redis_cache");
 const {
   countWords,
   countCharacters,
@@ -23,7 +24,17 @@ const getTextList = async (req, res) => {
 
 const getTextByID = async (req, res) => {
   try {
-    const text = await Text.findById(req.params.textId);
+    let text;
+    const cacheData = await redis_cache.get(req.params.textId);
+    //redis_cache.del(req.params.textId);
+    //checking from redis
+    if (cacheData) {
+      text = JSON.parse(cacheData);
+    } else {
+      text = await Text.findById(req.params.textId);
+      await redis_cache.set(req.params.textId, JSON.stringify(text));
+    }
+
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
     }
@@ -56,6 +67,9 @@ const createText = async (req, res) => {
       longest_words: longestWordsInParagraphs(req.body.value),
       created_by: req.session.user_id,
     });
+
+    await redis_cache.set(newData._id.toString(), JSON.stringify(newData)); //saving into redis
+
     res
       .status(200)
       .json({ success: true, message: "Created Successfully", data: newData });
@@ -71,6 +85,7 @@ const deleteText = async (req, res) => {
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
     }
+    redis_cache.del(req.params.textId);
     res
       .status(200)
       .json({ success: true, message: "Text deleted", data: text });
@@ -91,6 +106,7 @@ const updateText = async (req, res) => {
     };
     const text = await Text.findByIdAndUpdate(req.params.textId, updatedText);
     text.save();
+    await redis_cache.set(text._id.toString(), JSON.stringify(updatedText)); //updating data of redis
     if (!text) {
       return res.status(404).json({ success: false, message: "No data found" });
     }

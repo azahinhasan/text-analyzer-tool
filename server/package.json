@@ -32,6 +32,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^3.1.4",
     "npm": "^10.8.2",
+    "redis": "^4.6.15",
     "winston": "^3.13.1",
     "winston-daily-rotate-file": "^5.0.0"
   },
