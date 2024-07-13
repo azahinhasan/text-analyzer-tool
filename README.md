@@ -83,3 +83,6 @@
 - To run  `test` cases `npm run test` make sure port `5003` is not occupied by other process.Changeable form `.env` file.
 - Same goes to `npm run dev`. 
 - Using morgan and winston for logs tracking.
+- In `total character` space are counted. In `total word` counting if there are any alphanumeric into any word it will counted.
+- In `total sentences` if there are two (.) and between them only space it will be not count as sentence. Their must be any alphanumeric.
+- In `total paragraphs` line break and that line should have at last one alphanumeric to get counted. `longest-words` will return array of longest words.
