@@ -1,0 +1,20 @@
+{
+    "keep": {
+        "days": false,
+        "amount": 7
+    },
+    "auditLog": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\text-analyzer-tool\\server\\logs\\.b2d76b3976c1c6853df843adc3b4af6ed0c91209-audit.json",
+    "files": [
+        {
+            "date": 1720925180317,
+            "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\text-analyzer-tool\\server\\logs\\appscript-2024-07-14-08.log",
+            "hash": "2484b1b14616e6446d58b79c1d46c3b0d0d132d04ed97f24ad0de6cc55d2f332"
+        },
+        {
+            "date": 1720926071135,
+            "name": "C:\\Users\\azahi\\Desktop\\Work\\PersonalProject\\text-analyzer-tool\\server\\logs\\appscript-2024-07-14-09.log",
+            "hash": "26b23de994a3910fca5077c44c492d36614d3626b9d8dec8e47f53b62b97ab9b"
+        }
+    ],
+    "hashType": "sha256"
+}
