@@ -18,6 +18,7 @@
 ## How to run
 - Clone this repo
 - Go to `server` folder.
+- Run `npm i`
 - Run this command for test case `npm run test`. 
 - Run this command for running the app `npm run dev`.
 - (Optional) You can modify config data from `.env` file or `./config/config.js` file.
